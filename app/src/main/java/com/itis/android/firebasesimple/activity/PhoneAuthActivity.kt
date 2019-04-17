@@ -33,10 +33,10 @@ class PhoneAuthActivity : AppCompatActivity(), View.OnClickListener {
             onRestoreInstanceState(savedInstanceState)
         }
 
-        buttonStartVerification.setOnClickListener(this)
-        buttonVerifyPhone.setOnClickListener(this)
-        buttonResend.setOnClickListener(this)
-        signOutButton.setOnClickListener(this)
+        btn_start_verification.setOnClickListener(this)
+        btn_verify_phone.setOnClickListener(this)
+        btn_resend.setOnClickListener(this)
+        btn_sign_out_button.setOnClickListener(this)
 
         auth = FirebaseAuth.getInstance()
 
@@ -165,25 +165,25 @@ class PhoneAuthActivity : AppCompatActivity(), View.OnClickListener {
         when (uiState) {
             STATE_INITIALIZED -> {
                 // Initialized state, show only the phone number field and start button
-                enableViews(buttonStartVerification, fieldPhoneNumber)
-                disableViews(buttonVerifyPhone, buttonResend, fieldVerificationCode)
+                enableViews(btn_start_verification, fieldPhoneNumber)
+                disableViews(btn_verify_phone, btn_resend, fieldVerificationCode)
                 tv_detail.text = null
             }
             STATE_CODE_SENT -> {
                 // Code sent state, show the verification field
-                enableViews(buttonVerifyPhone, buttonResend, fieldPhoneNumber, fieldVerificationCode)
-                disableViews(buttonStartVerification)
+                enableViews(btn_verify_phone, btn_resend, fieldPhoneNumber, fieldVerificationCode)
+                disableViews(btn_start_verification)
                 tv_detail.setText(R.string.status_code_sent)
             }
             STATE_VERIFY_FAILED -> {
                 // Verification has failed, show all options
-                enableViews(buttonStartVerification, buttonVerifyPhone, buttonResend, fieldPhoneNumber,
+                enableViews(btn_start_verification, btn_verify_phone, btn_resend, fieldPhoneNumber,
                         fieldVerificationCode)
                 tv_detail.setText(R.string.status_verification_failed)
             }
             STATE_VERIFY_SUCCESS -> {
                 // Verification has succeeded, proceed to firebase sign in
-                disableViews(buttonStartVerification, buttonVerifyPhone, buttonResend, fieldPhoneNumber,
+                disableViews(btn_start_verification, btn_verify_phone, btn_resend, fieldPhoneNumber,
                         fieldVerificationCode)
                 tv_detail.setText(R.string.status_verification_succeeded)
 
@@ -205,13 +205,13 @@ class PhoneAuthActivity : AppCompatActivity(), View.OnClickListener {
         if (user == null) {
             // Signed out
             ll_phone_auth_field.visibility = View.VISIBLE
-            signedInButtons.visibility = View.GONE
+            ll_signed_in_buttons.visibility = View.GONE
 
             tv_status.setText(R.string.signed_out)
         } else {
             // Signed in
             ll_phone_auth_field.visibility = View.GONE
-            signedInButtons.visibility = View.VISIBLE
+            ll_signed_in_buttons.visibility = View.VISIBLE
 
             enableViews(fieldPhoneNumber, fieldVerificationCode)
             fieldPhoneNumber.text = null
@@ -245,13 +245,13 @@ class PhoneAuthActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(view: View) {
         when (view.id) {
-            R.id.buttonStartVerification -> {
+            R.id.btn_start_verification -> {
                 if (!validatePhoneNumber()) {
                     return
                 }
                 startPhoneNumberVerification(fieldPhoneNumber.text.toString())
             }
-            R.id.buttonVerifyPhone -> {
+            R.id.btn_verify_phone -> {
                 val code = fieldVerificationCode.text.toString()
                 if (TextUtils.isEmpty(code)) {
                     fieldVerificationCode.error = "Cannot be empty."
@@ -259,8 +259,8 @@ class PhoneAuthActivity : AppCompatActivity(), View.OnClickListener {
                 }
                 verifyPhoneNumberWithCode(storedVerificationId, code)
             }
-            R.id.buttonResend -> resendVerificationCode(fieldPhoneNumber.text.toString(), resendToken)
-            R.id.signOutButton -> signOut()
+            R.id.btn_resend -> resendVerificationCode(fieldPhoneNumber.text.toString(), resendToken)
+            R.id.btn_sign_out_button -> signOut()
         }
     }
 
