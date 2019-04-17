@@ -79,7 +79,9 @@ class SignInActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
         btn_to_signup.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
-        btn_reset_password.setOnClickListener { }
+        btn_reset_password.setOnClickListener {
+            startActivity(Intent(this, EmailActivity::class.java))
+        }
         btn_login.setOnClickListener {
             val email = email.text.toString()
             val password = password.text.toString()
@@ -97,6 +99,7 @@ class SignInActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLi
             progressBar.visibility = View.VISIBLE
             SoftKeyboard.hide(container)
 
+            firebaseAuth?.sendPasswordResetEmail("")
             //authenticate user
             firebaseAuth?.signInWithEmailAndPassword(email, password)
                     ?.addOnCompleteListener(this@SignInActivity) { task ->
