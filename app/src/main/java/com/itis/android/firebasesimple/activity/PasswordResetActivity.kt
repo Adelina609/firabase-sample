@@ -30,7 +30,7 @@ class PasswordResetActivity : AppCompatActivity() {
             }
 
             if (TextUtils.isEmpty(new_passw)) {
-                error_new_passw.error = getString(R.string.error_pass)
+                ti_new_password.error = getString(R.string.error_pass)
                 return@setOnClickListener
             }
             firebaseAuth?.confirmPasswordReset(code, new_passw)

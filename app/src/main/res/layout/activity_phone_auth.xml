@@ -1,4 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_layout"
     android:layout_width="match_parent"
@@ -8,14 +9,18 @@
     android:weightSum="4">
 
     <LinearLayout
+        android:id="@+id/ll_info_in_top"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="48dp"
         android:layout_weight="3"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
 
         <ImageView
-            android:id="@+id/icon"
+            android:id="@+id/iv_icon"
             style="@style/ThemeOverlay.FirebaseIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -23,7 +28,7 @@
             android:src="@drawable/fui_ic_mail_white_24dp" />
 
         <TextView
-            android:id="@+id/titleText"
+            android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/title_bottom_margin"
@@ -31,114 +36,109 @@
             android:theme="@style/ThemeOverlay.MyTitleText" />
 
         <TextView
-            android:id="@+id/status"
+            android:id="@+id/tv_status"
             style="@style/ThemeOverlay.MyTextDetail"
             android:text="@string/signed_out" />
 
         <TextView
-            android:id="@+id/detail"
+            android:id="@+id/tv_detail"
             style="@style/ThemeOverlay.MyTextDetail"
             tools:text="Firebase User ID: 123456789abc" />
-
     </LinearLayout>
 
-
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/ll_phone_auth_field"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/grey_300"
-        android:gravity="center_vertical">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp">
 
         <LinearLayout
-            android:id="@+id/phoneAuthFields"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:orientation="horizontal"
+            android:weightSum="2.0">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/fieldPhoneNumber"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2.0">
+                android:layout_weight="1.0"
+                android:hint="@string/hint_phone_number"
+                android:inputType="phone" />
 
-                <EditText
-                    android:id="@+id/fieldPhoneNumber"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_phone_number"
-                    android:layout_weight="1.0"
-                    android:inputType="phone"/>
-
-                <EditText
-                    android:id="@+id/fieldVerificationCode"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/hint_verification_code"
-                    android:layout_weight="1.0"
-                    android:inputType="number"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <EditText
+                android:id="@+id/fieldVerificationCode"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3.0">
-
-                <Button
-                    android:theme="@style/ThemeOverlay.MyDarkButton"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:id="@+id/buttonStartVerification"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:text="@string/start_phone_auth"/>
-
-                <Button
-                    android:theme="@style/ThemeOverlay.MyDarkButton"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:id="@+id/buttonVerifyPhone"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:text="@string/verify_phone_auth"/>
-
-                <Button
-                    android:theme="@style/ThemeOverlay.MyDarkButton"
-                    style="@style/Widget.AppCompat.Button.Colored"
-                    android:id="@+id/buttonResend"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1.0"
-                    android:text="@string/resend_phone_auth"/>
-            </LinearLayout>
+                android:layout_weight="1.0"
+                android:hint="@string/hint_verification_code"
+                android:inputType="number" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/signedInButtons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
             android:orientation="horizontal"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:visibility="gone"
-            android:weightSum="1.0">
+            android:weightSum="3.0">
 
             <Button
-                android:id="@+id/signOutButton"
+                android:id="@+id/buttonStartVerification"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                android:text="@string/sign_out" />
+                android:text="@string/start_phone_auth"
+                android:theme="@style/ThemeOverlay.MyDarkButton" />
 
+            <Button
+                android:id="@+id/buttonVerifyPhone"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="@string/verify_phone_auth"
+                android:theme="@style/ThemeOverlay.MyDarkButton" />
+
+            <Button
+                android:id="@+id/buttonResend"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:text="@string/resend_phone_auth"
+                android:theme="@style/ThemeOverlay.MyDarkButton" />
         </LinearLayout>
+    </LinearLayout>
 
-    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/signedInButtons"
+        android:layout_width="56dp"
+        android:layout_height="39dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:visibility="gone"
+        android:weightSum="1.0"
+        app:layout_constraintBottom_toTopOf="@+id/ll_info_in_top"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</LinearLayout>
+        <Button
+            android:id="@+id/signOutButton"
+            style="@style/Widget.AppCompat.Button.Colored"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:text="@string/sign_out" />
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

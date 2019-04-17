@@ -24,7 +24,7 @@ class EmailActivity : AppCompatActivity()  {
             val email = et_email.text.toString()
 
             if (TextUtils.isEmpty(email)) {
-                textinput_error_email.error = getString(R.string.error_email)
+                ti_error_email.error = getString(R.string.error_email)
                 return@setOnClickListener
             }
 
